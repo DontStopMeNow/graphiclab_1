@@ -1,4 +1,4 @@
-package ru.nsu.shmakov;
+package ru.nsu.shmakov.view;
 
 import javax.swing.*;
 
@@ -12,6 +12,7 @@ public class MainForm extends JFrame {
     private JButton startStopButton;
     private JSpinner animationSpinner;
     private JPanel rootPanel;
+    private ImagePanel Image;
 
     public MainForm() {
         super("Main Frame");
@@ -20,6 +21,7 @@ public class MainForm extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        setSize(900, 600);
         setVisible(true);
     }
 }

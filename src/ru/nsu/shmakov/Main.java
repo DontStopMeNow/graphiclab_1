@@ -1,5 +1,7 @@
 package ru.nsu.shmakov;
 
+import ru.nsu.shmakov.view.MainForm;
+
 /**
  * Created by Иван on 18.02.2015.
  */
