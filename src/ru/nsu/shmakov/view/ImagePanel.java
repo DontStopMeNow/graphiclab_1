@@ -22,7 +22,7 @@ public class ImagePanel extends JPanel {
         if(image != null) {
             Graphics2D g2 = image.createGraphics();
             MyGraphic2D myGraphic2D = image.getMyGraphic2D();
-
+            myGraphic2D.drawTriangle(0,0, 20, 20, 0, 40, Color.blue);
             g2d.drawImage(image, ((getWidth()- imageWidth)/2), (getHeight()- imageHeight)/2, new Color(255,255,255), null);
 
         }
