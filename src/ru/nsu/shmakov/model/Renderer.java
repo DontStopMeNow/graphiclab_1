@@ -6,6 +6,7 @@ import ru.nsu.shmakov.data.MyPolygon;
 import ru.nsu.shmakov.data.MyPolygonVertex;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ public class Renderer {
         return ourInstance;
     }
 
-    public static void renderPolygons(ArrayList<MyPolygon> polygons, MyImage texture, MyImage result) {
+    public static void renderPolygons(ArrayList<MyPolygon> polygons, BufferedImage texture, MyImage result) {
         if(0 == polygons.size())
             return;
 
@@ -26,6 +27,8 @@ public class Renderer {
 
             //Affine mapping
             MyGraphic2D mg2d = result.getMyGraphic2D();
+
+
             MyPolygonVertex a = (MyPolygonVertex) polygons.get(i).getP1().clone();
             MyPolygonVertex b = (MyPolygonVertex) polygons.get(i).getP2().clone();
             MyPolygonVertex c = (MyPolygonVertex) polygons.get(i).getP3().clone();
@@ -100,14 +103,31 @@ public class Renderer {
 
                 // текстурируем строку
                 for (currentX = (int)x_start; currentX <= (int)x_end; currentX++) {
-                    mg2d.drawPixel(currentX, currentY,
-                                    new Color( texture.getRGB((int)u*texture.getWidth(),
-                                                              (int)v*texture.getHeight())));
+
+                    int intU = (int)Math.round(u*texture.getWidth());
+                    int intV = (int)Math.round(v*texture.getHeight());
+                    if(intU >= texture.getWidth())
+                        intU = texture.getWidth() - 1;
+                    if(0 > intU)
+                        intU = 0;
+
+
+                    if(intV >= texture.getHeight())
+                        intV = texture.getHeight() - 1;
+                    if(0 > intV)
+                        intV = 0;
+
+                    Color color = new Color(texture.getRGB(intU ,intV));
+
+                    mg2d.drawPixel(currentX, currentY, color);
                     u += du;
                     v += dv;
                 }
+
             }
 
+            //Graphics2D g2 = result.createGraphics();
+            //g2.drawImage(texture, 2, 2, new Color(255,255,255), null);
 
 
             mg2d.drawTriangle(new Point(polygons.get(i).getP1().getX(), polygons.get(i).getP1().getY()),
