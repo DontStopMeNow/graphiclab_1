@@ -42,4 +42,5 @@ public class MyPolygon {
     private MyPolygonVertex p1;
     private MyPolygonVertex p2;
     private MyPolygonVertex p3;
+    private MyPolygonVertex center;
 }

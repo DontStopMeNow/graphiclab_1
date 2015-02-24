@@ -30,14 +30,38 @@ public class MyGraphic2D {
         image.setRGB(x, y, color);
     }
 
-    public void drawPixel(int x, int y, Color color){
+    public void drawPixelRGB(int x, int y, Color color){
         if(x >= width || x < 0 || y >= height || y < 0 )
             throw new RuntimeException("Out of range");
         image.setRGB(x, y, color.getRGB());
     }
 
+    public void drawPixelRGBA(int x, int y, Color color){
+        if(x >= width || x < 0 || y >= height || y < 0 )
+            throw new RuntimeException("Out of range");
+
+        int imR = color.getRed();
+        int imG = color.getGreen();
+        int imB = color.getBlue();
+        double alpha = color.getAlpha()/ 255.;
+
+        int bgRGB = image.getRGB(x, y);
+
+        int bgR = ((bgRGB >> 16) & 0xff);
+        int bgG = ((bgRGB >> 8 ) & 0xff);
+        int bgB =   bgRGB & 0xff;
+
+
+        Color newColor = new Color( (int)Math.floor((1 - alpha) * bgR + alpha * imR),
+                                    (int)Math.floor((1 - alpha) * bgG + alpha * imG),
+                                    (int)Math.floor((1 - alpha) * bgB + alpha * imB));
+
+
+        image.setRGB(x, y, newColor.getRGB());
+    }
+
     public void drawLine(Point p1, Point p2, Color color) {
-        drawLine((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY(), color);
+        drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(), (int) p2.getY(), color);
     }
 
     public void drawLine(Integer x1, Integer y1,
@@ -77,14 +101,14 @@ public class MyGraphic2D {
         int y = y1;
         for (int x = x1; x<=x2; x++) {
             if (steep) {
-                drawPixel(y, x, color);
+                drawPixelRGB(y, x, color);
             } else {
-                drawPixel(x, y, color);
+                drawPixelRGB(x, y, color);
             }
             error += derror;
 
             if (error > dx) {
-                y += (y2 > y1?1:-1);
+                y += (y2 > y1 ? 1:-1);
                 error -= dx*2;
             }
         }

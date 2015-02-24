@@ -14,6 +14,10 @@ public class MainForm extends JFrame {
     private JPanel rootPanel;
     private ImagePanel Image;
 
+    public ImagePanel getImage() {
+        return Image;
+    }
+
     public MainForm() {
         super("Main Frame");
         setContentPane(rootPanel);
@@ -23,5 +27,6 @@ public class MainForm extends JFrame {
 
         setSize(900, 600);
         setVisible(true);
+
     }
 }

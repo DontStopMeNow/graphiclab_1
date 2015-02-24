@@ -1,9 +1,6 @@
 package ru.nsu.shmakov.model;
 
-import ru.nsu.shmakov.data.MyGraphic2D;
-import ru.nsu.shmakov.data.MyImage;
-import ru.nsu.shmakov.data.MyPolygon;
-import ru.nsu.shmakov.data.MyPolygonVertex;
+import ru.nsu.shmakov.data.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -90,6 +87,7 @@ public class Renderer {
                     v_end = a.getV() + (b.getV() - a.getV()) * k;
                 }
                 double tmp = 0;
+
                 // x_start должен находиться левее x_end
                 if (x_start > x_end) {
                     tmp = x_start; x_start = x_end; x_end = tmp;
@@ -104,39 +102,69 @@ public class Renderer {
                 // текстурируем строку
                 for (currentX = (int)x_start; currentX <= (int)x_end; currentX++) {
 
-                    int intU = (int)Math.round(u*texture.getWidth());
-                    int intV = (int)Math.round(v*texture.getHeight());
-                    if(intU >= texture.getWidth())
-                        intU = texture.getWidth() - 1;
-                    if(0 > intU)
-                        intU = 0;
 
 
-                    if(intV >= texture.getHeight())
-                        intV = texture.getHeight() - 1;
-                    if(0 > intV)
-                        intV = 0;
+                    Color color = null;
+                    if (blended) {
+                        color = new Color(getFilteredColor(u, v, texture), true);
+                        mg2d.drawPixelRGBA(currentX, currentY, color);
+                    }
+                    else {
+                        color = new Color(getFilteredColor(u, v, texture));
+                        mg2d.drawPixelRGB(currentX, currentY, color);
+                    }
 
-                    Color color = new Color(texture.getRGB(intU ,intV));
 
-                    mg2d.drawPixel(currentX, currentY, color);
                     u += du;
                     v += dv;
                 }
 
             }
 
-            //Graphics2D g2 = result.createGraphics();
-            //g2.drawImage(texture, 2, 2, new Color(255,255,255), null);
-
-
-            mg2d.drawTriangle(new Point(polygons.get(i).getP1().getX(), polygons.get(i).getP1().getY()),
-                              new Point(polygons.get(i).getP2().getX(), polygons.get(i).getP2().getY()),
-                              new Point(polygons.get(i).getP3().getX(), polygons.get(i).getP3().getY()),
-                              Color.gray);
+            if (bordered)
+                mg2d.drawTriangle(new Point(polygons.get(i).getP1().getX(), polygons.get(i).getP1().getY()),
+                                  new Point(polygons.get(i).getP2().getX(), polygons.get(i).getP2().getY()),
+                                  new Point(polygons.get(i).getP3().getX(), polygons.get(i).getP3().getY()),
+                                  Color.gray);
         }
     }
 
-    private Renderer() {
+    private static int getFilteredColor(double u, double v, BufferedImage texture) {
+        int intColor = 0;
+        if (filterType == FilterType.NONE) {
+            intColor = Filter.getInstance().nearestFilter (u, v, texture);
+        }
+        else if(filterType == FilterType.BILINEAR) {
+            intColor = Filter.getInstance().bilinearFilter(u, v, texture);
+        }
+        return intColor;
+    }
+
+    private static boolean blended  = true;
+    private static boolean bordered = true;
+    private static FilterType filterType = FilterType.NONE;
+
+    public static boolean isBlended() {
+        return blended;
+    }
+
+    public static void setBlended(boolean blended) {
+        Renderer.blended = blended;
+    }
+
+    public static FilterType getFilterType() {
+        return filterType;
+    }
+
+    public static boolean isBordered() {
+        return bordered;
+    }
+
+    public static void setBordered(boolean bordered) {
+        Renderer.bordered = bordered;
+    }
+
+    public static void setFilterType(FilterType filterType) {
+        Renderer.filterType = filterType;
     }
 }
