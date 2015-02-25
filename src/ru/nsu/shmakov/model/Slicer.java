@@ -32,7 +32,6 @@ public class Slicer {
         double du = 1./cols;
         double dv = 1./rows;
 
-
         for (int r = 0; r < rows; ++r) {
             for (int c = 0; c < cols; ++c) {
 
@@ -47,7 +46,6 @@ public class Slicer {
 
                 MyPolygon p1 = new MyPolygon(v1, v2, v3);
                 MyPolygon p2 = new MyPolygon(v2, v3, v4);
-
                 polygons.add(p1);
                 polygons.add(p2);
             }

@@ -21,18 +21,41 @@ public class Renderer {
             return;
 
         for(int i = 0; i < polygons.size(); ++i) {
-
-            //Affine mapping
-            MyGraphic2D mg2d = result.getMyGraphic2D();
+            double shiftX = polygons.get(i).getShiftX();
+            double shiftY = polygons.get(i).getShiftY();
+            MyPolygonVertex center = polygons.get(i).getCenter();
+            double rotationAngle = polygons.get(i).getRotationAngle();
 
 
             MyPolygonVertex a = (MyPolygonVertex) polygons.get(i).getP1().clone();
             MyPolygonVertex b = (MyPolygonVertex) polygons.get(i).getP2().clone();
             MyPolygonVertex c = (MyPolygonVertex) polygons.get(i).getP3().clone();
 
-            MyPolygonVertex tmpVertex;
+            // Считаем сдвиги
 
+            a.setX(a.getX() + (int)Math.round(shiftX));
+            b.setX(b.getX() + (int) Math.round(shiftX));
+            c.setX(c.getX() + (int) Math.round(shiftX));
+
+            a.setY(a.getY() + (int) Math.round(shiftY));
+            b.setY(b.getY() + (int) Math.round(shiftY));
+            c.setY(c.getY() + (int) Math.round(shiftY));
+
+            // Считаем вращение, относительно центра
+            // По-хорошему добабавить бы матрицы
+            a.setX((int)Math.round((a.getX() - center.getX()) * Math.cos(rotationAngle) - (a.getY() - center.getY()) * Math.sin(rotationAngle) + center.getX()));
+            b.setX((int)Math.round((b.getX() - center.getX()) * Math.cos(rotationAngle) - (b.getY() - center.getY()) * Math.sin(rotationAngle) + center.getX()));
+            c.setX((int)Math.round((c.getX() - center.getX()) * Math.cos(rotationAngle) - (c.getY() - center.getY()) * Math.sin(rotationAngle) + center.getX()));
+
+            a.setY((int)Math.round((a.getX() - center.getX()) * Math.sin(rotationAngle) + (a.getY() - center.getY()) * Math.cos(rotationAngle) + center.getY()));
+            b.setY((int)Math.round((b.getX() - center.getX()) * Math.sin(rotationAngle) + (b.getY() - center.getY()) * Math.cos(rotationAngle) + center.getY()));
+            c.setY((int)Math.round((c.getX() - center.getX()) * Math.sin(rotationAngle) + (c.getY() - center.getY()) * Math.cos(rotationAngle) + center.getY()));
+
+            //Affine mapping
             // отсортируем вершины полигона по Y
+
+            MyGraphic2D mg2d = result.getMyGraphic2D();
+            MyPolygonVertex tmpVertex;
             if (a.getY() > b.getY()) {
                 tmpVertex = a;
                 a = b;
@@ -122,9 +145,9 @@ public class Renderer {
             }
 
             if (bordered)
-                mg2d.drawTriangle(new Point(polygons.get(i).getP1().getX(), polygons.get(i).getP1().getY()),
-                                  new Point(polygons.get(i).getP2().getX(), polygons.get(i).getP2().getY()),
-                                  new Point(polygons.get(i).getP3().getX(), polygons.get(i).getP3().getY()),
+                mg2d.drawTriangle(new Point(a.getX(), a.getY()),
+                                  new Point(b.getX(), b.getY()),
+                                  new Point(c.getX(), c.getY()),
                                   Color.gray);
         }
     }

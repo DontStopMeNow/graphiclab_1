@@ -13,6 +13,11 @@ public class MyPolygon {
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
+        calculateCenter();
+    }
+
+    public MyPolygonVertex getCenter() {
+        return center;
     }
 
     public MyPolygonVertex getP1() {
@@ -21,6 +26,7 @@ public class MyPolygon {
 
     public void setP1(MyPolygonVertex p1) {
         this.p1 = p1;
+        calculateCenter();
     }
 
     public MyPolygonVertex getP2() {
@@ -29,6 +35,7 @@ public class MyPolygon {
 
     public void setP2(MyPolygonVertex p2) {
         this.p2 = p2;
+        calculateCenter();
     }
 
     public MyPolygonVertex getP3() {
@@ -37,10 +44,47 @@ public class MyPolygon {
 
     public void setP3(MyPolygonVertex p3) {
         this.p3 = p3;
+        calculateCenter();
     }
 
+    public double getShiftX() {
+        return shiftX;
+    }
+
+    public void setShiftX(double shiftX) {
+        this.shiftX = shiftX;
+    }
+
+    public double getShiftY() {
+        return shiftY;
+    }
+
+    public void setShiftY(double shiftY) {
+        this.shiftY = shiftY;
+    }
+
+    public double getRotationAngle() {
+        return rotationAngle;
+    }
+
+    public void setRotationAngle(double rotationAngle) {
+        this.rotationAngle = rotationAngle;
+    }
+
+    private void calculateCenter() {
+        center = new MyPolygonVertex((int)Math.round((p1.getX() + p2.getX() + p3.getX())/3),
+                                     (int)Math.round((p1.getY() + p2.getY() + p3.getY())/3),
+                                                     (p1.getU() + p2.getU() + p3.getU())/3,
+                                                     (p1.getV() + p2.getV() + p3.getV())/3);
+    }
     private MyPolygonVertex p1;
     private MyPolygonVertex p2;
     private MyPolygonVertex p3;
     private MyPolygonVertex center;
+
+    private double shiftX = 0;
+    private double shiftY = 0;
+    private double rotationAngle = 0;
+
+
 }
