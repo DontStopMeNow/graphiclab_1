@@ -8,6 +8,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 /**
  * Created by Иван on 18.02.2015.
@@ -20,10 +22,22 @@ public class MainForm extends JFrame {
     private JSpinner animationSpinner;
     private JPanel rootPanel;
     private ImagePanel imagePanel;
+    private JLabel statLable;
 
     private AnimationSpinerController    animationSpinerController;
     private BlendController              blendController;
     private FilterController             filterController;
+    private InitController               initController;
+    private StartStopAnimationController startStopAnimationController;
+    private ImagePanelController         imagePanelController;
+
+    public ImagePanelController getImagePanelController() {
+        return imagePanelController;
+    }
+
+    public void setImagePanelController(ImagePanelController imagePanelController) {
+        this.imagePanelController = imagePanelController;
+    }
 
     public AnimationSpinerController getAnimationSpinerController() {
         return animationSpinerController;
@@ -64,10 +78,6 @@ public class MainForm extends JFrame {
     public void setStartStopAnimationController(StartStopAnimationController startStopAnimationController) {
         this.startStopAnimationController = startStopAnimationController;
     }
-
-    private InitController               initController;
-    private StartStopAnimationController startStopAnimationController;
-
 
     public ImagePanel getImagePanel() {
         return imagePanel;
@@ -117,6 +127,7 @@ public class MainForm extends JFrame {
                 blendController.doAction(blendRadioButton.isSelected());
             }
         });
+
         animationSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -134,6 +145,7 @@ public class MainForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 initController.doAction();
+                animationSpinner.setValue(0);
             }
         });
         startStopButton.addActionListener(new ActionListener() {
@@ -142,5 +154,29 @@ public class MainForm extends JFrame {
                 startStopAnimationController.doAction();
             }
         });
+
+        imagePanel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+                imagePanelController.doAction(e.getX(), e.getY());
+            }
+        });
+    }
+
+    public int getDrawPanelWidth() {
+        return imagePanel.getWidth();
+    }
+
+    public int getDrawPanelHeight() {
+        return imagePanel.getHeight();
+    }
+
+    public void setTime(int t) {
+        animationSpinner.setValue(t);
+    }
+
+    public void setState(String state) {
+        statLable.setText(state);
     }
 }

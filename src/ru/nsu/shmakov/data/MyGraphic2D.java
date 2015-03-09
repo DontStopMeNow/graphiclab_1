@@ -32,13 +32,21 @@ public class MyGraphic2D {
 
     public void drawPixelRGB(int x, int y, Color color){
         if(x >= width || x < 0 || y >= height || y < 0 )
-            throw new RuntimeException("Out of range");
-        image.setRGB(x, y, color.getRGB());
+            return;
+            //throw new RuntimeException("Out of range");
+        int imR = color.getRed();
+        int imG = color.getGreen();
+        int imB = color.getBlue();
+
+        Color newColor = new Color(imR, imG, imB);
+
+        image.setRGB(x, y, newColor.getRGB());
     }
 
     public void drawPixelRGBA(int x, int y, Color color){
         if(x >= width || x < 0 || y >= height || y < 0 )
-            throw new RuntimeException("Out of range");
+            return;
+            //throw new RuntimeException("Out of range");
 
         int imR = color.getRed();
         int imG = color.getGreen();
@@ -68,7 +76,8 @@ public class MyGraphic2D {
                          Integer x2, Integer y2, Color color) {
         if(     x1 >= width || x1 < 0 || y1 >= height || y1 < 0 ||
                 x2 >= width || x2 < 0 || y2 >= height || y2 < 0 )
-            throw new RuntimeException("Out of range");
+            return;
+            //throw new RuntimeException("Out of range");
 
         boolean steep = false;
         int tmp = 0;

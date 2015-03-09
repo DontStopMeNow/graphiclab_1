@@ -86,5 +86,32 @@ public class MyPolygon {
     private double shiftY = 0;
     private double rotationAngle = 0;
 
+    private int countOfPixesInEdges = 0;
+    private int countOfPixes = 0;
+    private int countOfBlendedPixes = 0;
 
+    public int getCountOfPixes() {
+        return countOfPixes;
+    }
+
+    public void setCountOfPixes(int countOfPixes) {
+        this.countOfPixes = countOfPixes;
+    }
+
+    public int getCountOfBlendedPixes() {
+        return countOfBlendedPixes;
+    }
+
+    public void setCountOfBlendedPixes(int countOfBlendedPixes) {
+        this.countOfBlendedPixes = countOfBlendedPixes;
+    }
+
+
+    public int getCountOfPixesInEdges() {
+        return countOfPixesInEdges;
+    }
+
+    public void setCountOfPixesInEdges(int countOfPixesInEdges) {
+        this.countOfPixesInEdges = countOfPixesInEdges;
+    }
 }

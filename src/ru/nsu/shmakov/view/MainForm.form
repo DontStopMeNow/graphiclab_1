@@ -44,10 +44,10 @@
           <text value="Start/Stop"/>
         </properties>
       </component>
-      <component id="4c102" class="javax.swing.JLabel">
+      <component id="4c102" class="javax.swing.JLabel" binding="statLable">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.1"/>
+          <gridbag weightx="0.0" weighty="3.0"/>
         </constraints>
         <properties>
           <text value="State"/>

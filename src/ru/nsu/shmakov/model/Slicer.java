@@ -46,6 +46,10 @@ public class Slicer {
 
                 MyPolygon p1 = new MyPolygon(v1, v2, v3);
                 MyPolygon p2 = new MyPolygon(v2, v3, v4);
+
+                //p1.setRotationAngle(Math.PI/2);
+                //p2.setRotationAngle(Math.PI/7);
+
                 polygons.add(p1);
                 polygons.add(p2);
             }
