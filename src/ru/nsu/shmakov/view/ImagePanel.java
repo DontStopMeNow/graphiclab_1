@@ -35,7 +35,6 @@ public class ImagePanel extends JPanel {
     public void setImage(MyImage image) {
         this.image = image;
         repaint();
-        repaint();
     }
 
     private MyImage image;

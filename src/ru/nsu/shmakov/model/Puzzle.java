@@ -50,7 +50,7 @@ public class Puzzle {
         slicer = new Slicer(4, 4, texture);
         image  = new MyImage(mainForm.getDrawPanelWidth(), mainForm.getDrawPanelHeight(), BufferedImage.TYPE_4BYTE_ABGR);
 
-        scale = 1;
+        scale = 2;
         slicer.setScale(scale);
         polygons = slicer.sliceToTriangles((image.getWidth () - texture.getWidth ())/2,
                                            (image.getHeight() - texture.getHeight())/2);

@@ -118,6 +118,7 @@ public class MainForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filterController.doAction(filterRadioButton.isSelected());
+                repaint();
             }
         });
 
@@ -125,6 +126,7 @@ public class MainForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 blendController.doAction(blendRadioButton.isSelected());
+                repaint();
             }
         });
 
@@ -138,6 +140,7 @@ public class MainForm extends JFrame {
                     animationSpinner.setValue((Integer) 0);
 
                 animationSpinerController.doAction((Integer) animationSpinner.getValue());
+                repaint();
             }
         });
 
@@ -146,6 +149,7 @@ public class MainForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 initController.doAction();
                 animationSpinner.setValue(0);
+                repaint();
             }
         });
         startStopButton.addActionListener(new ActionListener() {
@@ -160,8 +164,10 @@ public class MainForm extends JFrame {
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
                 imagePanelController.doAction(e.getX(), e.getY());
+                repaint();
             }
         });
+        repaint();
     }
 
     public int getDrawPanelWidth() {
